@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+ <head>
+  <meta charset=UTF-8>
+  <title>RFS Times</title>
+  <style>
+   html, body {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+   }
+   .clockwrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 100vh;
+   }
+   .clock {
+    border: 1px solid #955;
+    width: calc(50% - 2px);
+    height: calc(50vh - 2px);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+   }
+   .clocktext {
+    text-align: center;
+    width: 100%;
+    font-size: 48px;
+   }
+   .timetext {
+    color: #c22;
+   }
+   .datetext {
+    font-size: 0.5em;
+    color: #c22;
+   }
+  </style>
+ </head>
+ <body onload="setupClocks()">
+  <div class="clockwrapper">
+   <div class="clock" id="mobile"></div>
+   <div class="clock" id="onscene"></div>
+   <div class="clock" id="departing"></div>
+   <div class="clock" id="instation"></div>
+  </div>
+
+  <script>
+function setupClocks(){
+ var clocks = document.getElementsByClassName('clock');
+ // add name labels to the clocks:
+ for (var i=0;i<clocks.length;i++){
+  var clock_name_holder = document.createElement('p');
+  var clock_name = document.createTextNode(clocks[i].id);
+  clock_name_holder.id = 'name_'+clocks[i].id;
+  clock_name_holder.classList.add('clocktext');
+  clock_name_holder.appendChild(clock_name);
+  clocks[i].appendChild(clock_name_holder);
+ }
+ // add time placeholders to the clocks:
+ for (var i=0;i<clocks.length;i++){
+  var time_name_holder = document.createElement('p');
+  var time_name = document.createTextNode('');
+  time_name_holder.id = 'time_'+clocks[i].id;
+  time_name_holder.classList.add('clocktext');
+  time_name_holder.appendChild(time_name);
+  clocks[i].appendChild(time_name_holder);
+ }
+ // set the onclock behaviour of each clock:
+ for (var i=0;i<clocks.length;i++){
+  clocks[i].onclick = function(){ setClock(this.id);};
+ }
+}
+
+function zeropad(n){
+ return (Number(n)<10?'0'+n:n);
+}
+
+function setClock(clock_id){
+ var this_clock_time = document.getElementById('time_'+clock_id);
+ if (this_clock_time.innerHTML.length) return 0;
+
+//const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+ var now = new Date(); 
+ var now_date = now.getDate() + " " + (months[now.getMonth()]) + " " + now.getFullYear();
+ var now_time = zeropad(now.getHours()) + ":"  + zeropad(now.getMinutes()) + ":" + zeropad(now.getSeconds());
+ this_clock_time.innerHTML = '<span class="timetext">'+now_time+'</span><br/><span class="datetext">'+now_date+'</span>';
+}
+  </script>
+ </body>
+</html>
