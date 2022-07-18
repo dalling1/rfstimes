@@ -12,3 +12,8 @@ Use
 Click/press on each clock to set the timestamp.  Reload to clear.
 
 At the moment there is no way to reset a single timestamp; this could be added in the future (or a switch to lock/unlock each entry).
+
+
+A live version of the tool is available at
+
+     https://dalling1.github.io/rfstimes/
